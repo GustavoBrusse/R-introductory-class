@@ -1,0 +1,340 @@
+#######################################################################################################
+##################### AULA DE INTRODUCAO AO R  ########################################################
+#####################     Gustavo Brusse       ########################################################
+##################### gustavo.brusse@gmail.com ########################################################
+#######################################################################################################
+
+# Criando Objetos: numerico, vetor, texto, matriz, data frame
+# objetos numericos e operacoes
+a <- 2
+b <- 3
+c<- 3*2
+d<- 3+2
+e<- 3/2
+
+# para saber o tipo da variavel: string, numeric, character...
+str(a)
+#factors - classe para variaveis categoricas 
+#numeric - classe para variaveis numericas
+
+# Comandos simples como calculadora/Excel
+# reparem na estrutura da funcao no R: funcao(argumento 1, argumento 2 , ... , etc)
+# Parecido com o Excel
+log(3)
+log(x=3,base=2)
+
+# criando um vetor
+b <- c(2,3,4)
+# obs: "c" representa a palavra "concatenate", e é usado para criar objetos c(objeto 1, objeto 2, ..., objeto n)
+
+str(b)
+
+# extrair elementos de um vetor
+b[1]
+b[2]
+b[3]
+
+# o simbulo ":" significa uma sequencia, "de":"ate"
+b[1:2]
+
+# Operação com vetor
+b+2
+a <- c(5,7,8)
+a+b
+
+# texto
+text1<-"Demografia"
+text2<-c("hello","world")
+
+#transformar uma variavel "character" em factor
+vetor<-c("Masculino", "Feminino")
+vetor
+vetor <- factor(vetor)
+vetor
+
+#trasformar em numerico
+as.numeric(vetor)
+vetor
+
+#nomear as categorias
+vetor<-c(1, 2)
+levels(vetor) <- c("SIM", "NÃO")
+vetor
+
+#categorias ordenadas (variaveis ordinais)
+vetor <- factor(vetor, ordered = T, levels <- c("baixo", "medio", "alto"))
+
+# sequências numericas
+e <- 150:300
+
+# extrair elementos de uma sequencia (vetor)
+e[1]
+e[27]
+e[50:70]
+e[c(2,3,4)]
+e<200
+
+# funcoes no R: nome_da_funcao(argumento1, argumento2, ... , argumento n) 
+length(e)
+sum(e)
+
+#data frame, um objeto de objetos
+a<-5
+b <- c(3,3,9)
+c<-"Bom dia"
+d<-data.frame(a,b,c)
+
+str(d)
+
+#como "ver" os dados
+view(d)
+
+# Trabalhando com mais de uma dimensao: Matriz
+matrix(1:9, nrow = 3, ncol = 3)
+
+# outra forma de criar uma matriz e usando o comando cbind e rbind para juntar vetores
+m<-cbind(c(1,2,3),c(4,5,6))
+
+rbind(c(1,2,3),c(4,5,6))
+
+# extrair elementos da linha de uma matriz
+a<-m[1,]
+
+# extrair elementos da coluna de uma matriz
+b<-m[,1]
+
+### EXERCÍCIOS ######
+# EXERCICIO 1: Construa um data frame contendo os objetos: o dia do seu aniversario, a cidade onde nasceu e as idades das pessoas que moram com voce. 
+# EXERCICIO 2:  a) Contrua 3 vetores com 3 elementos cada.
+		b) Junte os vetores em colunas, depois, junte-os em forma de colunas
+		c) Qual é o elemento da linha 2 e coluna 2?
+# EXERCICIO 3: Construa uma base de dados (data frame) contendo: uma variavel formada por uma sequencia de 0 a 100; uma outra formada por uma sequencia de 50 a 150; e uma ultima sequencia de 200 a 300.
+# EXERCICIO 4: Selecione os casos de ID entre 50 e 60. Qual é a soma da linha 55?
+
+
+####################################################
+#### Agora vamos trabalhar com um banco de dados ###
+####################################################
+
+
+#Primeiro, descobrir o working directory atual do R
+getwd()
+
+#Mudar o working directory. Note que as barras dos diretorios sao invertidas ou duplas 
+setwd("C:\\User\\Documents")
+
+#leitura de pacotes: são bibliotecas contendo funções e dados para fins específicos
+install.packages("ggplot2")
+
+#habilitar uma biblioteca que irá utilizar
+library("ggplot2")
+
+# Exemplo de leitura de banco de dados .TXT
+# 1- Entre no site do Human Mortality Database: https://www.mortality.org/
+# 2- Escolha um Pais
+# 3- Escolha "Deaths 1x1"
+# 4- Clicar com o botao direito e "Salvar o arquivo como" .txt na área download
+
+#Usando o help do R para ler os argumentos da funcao
+?read.table 
+
+#Ler dados de texto com "Skip"
+dados <- read.table("C:\\Users\\gusta\\Downloads\\Deaths_1x1.txt", header = T, sep = ",", skip=2)
+
+#No R studio ha um botao no Environment chamado "Import Dataset", que e o equivalente ao read.table 
+#É so clicar e procurar seu arquivo para abrir. Inclusive para arquivos SAS e SPSS.
+
+# Um pouco de manipulação de dados: pacote MASS ja vem instalado no R, nao precisa do comando "install.packages"
+library(MASS)
+
+#Escolhendo um banco de dados para nosso exemplo: Risk Factors Associated With Low Infant Birth Weight
+data("birthwt")
+
+birthwt
+# O que se trata o banco?
+help("birthwt")
+
+## tipo de objeto ##
+class(birthwt)
+
+## ver os dados (apenas 5 linhas)##
+head(birthwt)
+
+## ver os dados (apenas 5 ultimas linhas)##
+tail(birthwt)
+
+## ver o banco de dados todo ##
+View(birthwt)
+
+## nome das variaveis ##
+names(birthwt)
+
+## dimensao do banco ##
+dim(birthwt)
+n <- dim(birthwt)[1]
+
+## selecionar uma variavel do banco ##
+birthwt$bwt
+
+## estatisticas descritivas de uma variavel do banco##
+mean(birthwt$bwt)
+median(birthwt$bwt)
+sd(birthwt$bwt)
+var(birthwt$bwt)
+min(birthwt$bwt)
+max(birthwt$bwt)
+quantile(birthwt$bwt)
+
+## estatisticas descritivas de todas variaveis do banco ##
+summary(birthwt)
+
+# Graficos basicos que ja vem no R#
+
+# dispersao
+plot(birthwt$bwt)
+
+# dispersao com duas variaveis (correlacao)
+plot(birthwt$age, birthwt$bwt)
+
+help(plot)
+
+# colocando titulo, titulo nos eixos
+plot(birthwt$age, birthwt$bwt, main="Peso ao nascer em gramas pela idade da mãe", ylab="Peso (gramas)", xlab="Idade da mãe")
+
+#boxplot
+boxplot(birthwt$bwt)
+
+#histograma
+hist(birthwt$bwt)
+
+## ver um elemento na variavel ##
+birthwt$bwt[20]
+
+## ver uma sequencia de elementos na variavel ##
+birthwt$bwt[1:10]
+
+## mostrar nascimentos menores que 2000 gramas ##
+birthwt$bwt[birthwt$bwt<2000]
+
+## selecionar dados ##
+birthwt[1:6,]
+birthwt[123:130,]
+birthwt[,1:2]
+birthwt[,"age"]
+
+## SELECTCASE: criar um subset ##
+newdata<-subset(birthwt,subset=bwt<4000)
+otherdata<-subset(birthwt,select=c("age","bwt"), subset=bwt<4000)
+
+## media de uma populacao especifica: fumantes e não fumantes ##
+mean(birthwt$bwt[birthwt$smoke==0])
+mean(birthwt$bwt[birthwt$smoke==1])
+
+## função "by" - Aplica uma funcao por categoria, ex: media por fumante ou nao fumante ##
+by(birthwt$bwt, birthwt$smoke, mean)
+by(data=birthwt$bwt, INDICES = birthwt$bwt, FUN = mean)
+by(birthwt$bwt, birthwt$race, mean)
+by(birthwt$bwt, birthwt$smoke, quantile)
+
+## CROSSTABLES: Tabelas, cruzamentos ##
+table(birthwt$age)
+table(birthwt$smoke)
+table(birthwt$low,birthwt$smoke)
+table(birthwt$low,birthwt$smoke,dnn=c("Low","Smoke"))
+tab<-table(birthwt$low,birthwt$smoke,dnn=c("Low","Smoke"))
+
+prop.table(tab)
+addmargins(tab)
+
+prop.table(tab,1)
+addmargins(tab,1)
+
+prop.table(tab,2)
+addmargins(tab,2)
+
+## Mudar valores de variaveis ##
+birthwt[3,2]<-30
+birthwt[3,"age"]<-20
+birthwt$age[birthwt$age>39]<-39
+birthwt$age[birthwt==39]<-NA
+
+## Mudar nome de variaveis ##
+names(birthwt)[3]<-"motherwt"
+names(birthwt)[names(birthwt)=="lwt"]<-"motherwt"
+
+## Criar uma variavel nova ##
+birthwt$test<-5
+birthwt$agesesquared<-birthwt$age^2
+
+## variavel Dummy ##
+birthwt$dummy<- NA
+birthwt$dummy[birthwt$age<35]<-0
+birthwt$dummy[birthwt$age>35]<-1
+
+## Criar idades quinquenais ## 
+birthwt$ageclass<-NA
+birthwt$ageclass[birthwt$age<=29]<-1
+birthwt$ageclass[birthwt$age>29]<-2
+birthwt$ageclass[birthwt$age>39]<-3
+
+## Missing values ##
+# tenho missing no banco?
+is.na(birthwt$dummy)
+
+# calculo sem considerar os missings
+mean(birthwt$dummy)
+mean(birthwt$dummy,na.rm=TRUE)
+table(birthwt$dummy,useNA="always")
+
+## Remove missings do banco ##
+new.data<-na.omit(birthwt)
+
+## Remove os missings de uma variavel ##
+newdummy <- subset(birthwt, subset=!in.na(dummy))
+
+## CATEGORIAS: LABELS ##
+birthwt$race<-factor(birthwt$race, levels=c(1,2,3), labels=c("White", "Black", "Other"))
+
+##salvar dados como CSV
+write.csv(new.data, file="new.data.csv")
+
+### EXERCICIOS ######
+# Usando os dados do Human Mortality database (Deaths_1x1) para um pais de sua escolha
+#EXERCICIO 1: Troque o nome das variaveis para portugues (Ano, Idade, Mulheres, Homens, Total)
+#EXERCICIO 2: Certifique que não ha missing no banco
+#EXERCICIO 3: Crie uma nova variavel "Idade quinquenal", na qual para cada idade simples a variavel nos diz qual o grupo quinquenal que pertence.
+#EXERCICIO 4: Crie um banco de dados com apenas mortes masculinas 
+#EXERCICIO 5: Faça um plot da quantidade de mortes masculinas por grupo etario para o ano de 2000
+#EXERCICIO 6: Compare a media de mortes masculinas e femininas para o ano de 2017
+#EXERCICIO 7: Em que ano e em qual idade foi a quantidade maxima de mortes observadas?   
+#EXERCICIO 8: Em que ano e em qual idade foi a quantidade minima de mortes observadas?  
+#EXERCICIO 9: Faca uma tabela contendo a proporcao de mortes
+
+### EXERCÍCIOS ######
+# Agora baixe os dados do Human Mortality database (Births_1x1) para um pais de sua escolha
+#EXERCICIO 1: Troque o nome das variaveis para portugues (Ano, Idade, Mulheres, Homens, Total)
+#EXERCICIO 2: Certifique que não ha missing no banco
+#EXERCICIO 3: Crie uma nova variavel "Idade quinquenal", na qual para cada idade simples a variavel nos diz qual o grupo quinquenal que pertence.
+#EXERCICIO 4: Faca um plot da quantidade de nascimentos por grupo etario para o primeiro e ultimo ano do banco
+
+
+#RESUMO DAS FUNCOES APRENDIDAS
+#str(objeto) - identifica classe do objeto
+#nome_do_objeto[1] - extrai o primeiro elemento do objeto
+#nome_do_objeto[1,] - extrai a primeira linha do objeto
+#nome_do_objeto[,1] - extrai a primeira coluna do objeto
+#cbind() - junta colunas numa matriz
+#rbind() - junta linhas numa matriz
+#getwd() - descobre o working directory do R
+#setwd() - muda o working directory do R
+#view (data.frame) - ve o banco de dados todo
+#head(data.frame) - ve as 6 primeiras linhas
+#str(data.frame) - mostra todas as colunas (variáveis) e diz que tipo a variavel e
+#nrow(data.frame) - quantas linhas?
+#ncol(data.frame) - quantas colunas?
+#dim(data.frame) - qual a dimensao da matriz? (linha, coluna)
+#names(data.frame) - mostra os nomes das variaveis 
+#ls() - ver o que voce tem no environment
+#rm() - remove um objeto do environment
+#length(data.frame) - quantos elementos ha nesta coluna ou objeto?
+#typeof(data.frame) - tipo da variavel?
